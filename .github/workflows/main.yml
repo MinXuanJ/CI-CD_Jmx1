@@ -85,6 +85,7 @@ jobs:
       id : build_and_push
       uses: docker/setup-qemu-action@v3
       
+      
 
     - name: Upload Trivy Report
       id: upload_trivy_report
