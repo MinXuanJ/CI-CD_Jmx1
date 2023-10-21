@@ -34,13 +34,7 @@ jobs:
         output: 'trivy-report.txt'
         exit-code: '1'
         severity: 'CRITICAL,HIGH'
-    -
-      name: Upload to Github
-      uses: github/codeql-action/upload-sarif@v2
-      if: always()
-      with:
-        sarif_file: trivy-report.txt
-      
+    
     -
       name: Display Trivy Report
       run: cat trivy-report.txt  
@@ -95,7 +89,7 @@ jobs:
 
     - name: Upload Trivy Report
       id: upload_trivy_report
-      uses: actions/upload-artifact@v2
+      uses: rtCamp/action-slack-notify@v2
       if: always()
       with:
         name: trivy-report
