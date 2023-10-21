@@ -85,11 +85,13 @@ jobs:
       id : build_and_push
       uses: docker/setup-qemu-action@v3
       
-      
+
 
     - name: Upload Trivy Report
       id: upload_trivy_report
       uses: actions/upload-artifact@v2
       with:
         name: trivy-report
-        path: trivy-report.txt 
+        path: trivy-report.txt
+      env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
