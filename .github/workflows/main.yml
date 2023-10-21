@@ -34,7 +34,7 @@ jobs:
         output: 'trivy-report.txt'
         exit-code: '1'
         severity: 'CRITICAL,HIGH'
-      
+     
     -
       name: Report Failure Messgae
       id: report_failure
@@ -42,11 +42,15 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
-        SLACK_TITTLE: 'Pipeline Scan Failed'
+        SLACK_TITLE: 'Pipeline Scan Failed'
         SLACK_MESSAGE: 'FAILED TRIVY SCAN'
 
+    - 
+      name: Display Trivy Report
+      run: cat trivy-report.txt
 
-    - name: Upload Trivy Report
+    - 
+      name: Upload Trivy Report
       id: upload_trivy_report
       uses: MeilCli/slack-upload-file@v3
       if: always()
