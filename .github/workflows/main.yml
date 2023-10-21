@@ -34,10 +34,7 @@ jobs:
         output: 'trivy-report.txt'
         exit-code: '1'
         severity: 'CRITICAL,HIGH'
-    
-    -
-      name: Display Trivy Report
-      run: cat trivy-report.txt  
+      
     -
       name: Report Failure Messgae
       id: report_failure
@@ -89,10 +86,12 @@ jobs:
 
     - name: Upload Trivy Report
       id: upload_trivy_report
-      uses: rtCamp/action-slack-notify@v2
+      uses: MeilCli/slack-upload-file@v3
       if: always()
       with:
-        name: trivy-report
-        path: trivy-report.txt
-      env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
+        slack_token: ${{ secrets.SLACK_TOKEN }}
+        channel_id: ${{ secrets.SLACK_CHANNNElID_TEST}}
+        file_path: 'trivy-report.txt'
+        initial_comment: 'Report by Jmx'
+      
+          
