@@ -34,7 +34,9 @@ jobs:
         output: 'trivy-report.txt'
         exit-code: '1'
         severity: 'CRITICAL,HIGH'
-        
+    -
+      name: Display Trivy Report
+      run: cat trivy-report.txt  
     -
       name: Report Failure Messgae
       id: report_failure
@@ -42,6 +44,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
+        SLACK_TITTLE: 'Pipeline Scan Failed'
+        SLACK_MESSAGE: 'FAILED TRIVY SCAN'
 
     -   
       name: Set up QEMU
@@ -74,12 +78,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
         SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
-    - name: Update file to Slack
-      id: update_file
-      uses: actions/upload-artifact@v2
-      with:
-        name: trivy-report
-        path: trivy-report.json
+    
 
     - name: Build and push container
       id : build_and_push
