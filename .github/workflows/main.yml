@@ -89,7 +89,7 @@ jobs:
       uses: MeilCli/slack-upload-file@v3
       if: always()
       with:
-        slack_token: ${{ secrets.SLACK_TOKEN }}
+        slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel_id: ${{ secrets.SLACK_CHANNNElID_TEST}}
         file_path: 'trivy-report.txt'
         initial_comment: 'Report by Jmx'
