@@ -91,6 +91,8 @@ jobs:
       env:
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         cosign_private_key: ${{ secrets.COSIGN_PRIVATE_KEY }}
+        digest: ${{ steps.docker_build.outputs.digest }}
+    
 
       #- 
     #  name: Upload Trivy Report
