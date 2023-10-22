@@ -84,14 +84,7 @@ jobs:
       name: Check install
       if: steps.scan_pipeline.outcome == 'success'
       run: cosign version
-    -
-      name : Verify Singature
-      if: steps.scan_pipeline.outcome == 'success'
-      run: cosign verify --key cosign.pub docker.io/jmx139/go-fortune_jmx@${{ steps.docker_build.outputs.digest }}
-      env:
-        COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-        cosign_public_key: ${{ secrets.COSIGN_PUBLIC_KEY }}
-        digest: ${{ steps.docker_build.outputs.digest }}
+    
     -
       name: Sign Image
       if: steps.scan_pipeline.outcome == 'success'
@@ -99,6 +92,14 @@ jobs:
       env:
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         cosign_private_key: ${{ secrets.COSIGN_PRIVATE_KEY }}
+        digest: ${{ steps.docker_build.outputs.digest }}
+    -
+      name : Verify Singature
+      if: steps.scan_pipeline.outcome == 'success'
+      run: cosign verify --key cosign.pub docker.io/jmx139/go-fortune_jmx@${{ steps.docker_build.outputs.digest }}
+      env:
+        COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+        cosign_public_key: ${{ secrets.COSIGN_PUBLIC_KEY }}
         digest: ${{ steps.docker_build.outputs.digest }}
     -
       name: Report Success Messgae
