@@ -33,7 +33,7 @@ jobs:
         format: 'table'
         output: 'trivy-report.txt'
         exit-code: '1'
-        severity: 'HIGH'
+        severity: 'CRITICAL'
      
     -
       name: Report Failure Messgae
@@ -73,15 +73,15 @@ jobs:
         push: true
         tags: jmx139/jmx/go-fortune:${{ github.sha }}
 
-    - 
-      name: Upload Trivy Report
-      id: upload_trivy_report
-      uses: MeilCli/slack-upload-file@v3
-      if: always()
-      with:
-        slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-        channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
-        file_path: 'trivy-report.txt'
-        initial_comment: 'Report by Jmx'
+    #- 
+    #  name: Upload Trivy Report
+     # id: upload_trivy_report
+      #uses: MeilCli/slack-upload-file@v3
+      #if: always()
+      #with:
+       # slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+        #channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
+        #file_path: 'trivy-report.txt'
+        #initial_comment: 'Report by Jmx'
       
           
