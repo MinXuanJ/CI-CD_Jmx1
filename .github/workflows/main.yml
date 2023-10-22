@@ -38,7 +38,7 @@ jobs:
     -
       name: Report Failure Messgae
       id: report_failure
-      if: ${{ failure() }}
+      if: steps.scan_pipeline.outcome == 'failure'
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
@@ -49,6 +49,32 @@ jobs:
       name: Display Trivy Report
       run: cat trivy-report.txt
 
+    -
+      name: Set up QEMU
+      if: steps.scan_pipeline.outcome == 'success'
+      uses: docker/setup-qemu-action@v3
+    -
+      name: Set up Docker Buildx
+      if: steps.scan_pipeline.outcome == 'success'
+      uses: docker/setup-buildx-action@v3
+    -
+      name: Login to Docker Hub
+      if: steps.scan_pipeline.outcome == 'success'
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    -
+      name: Build and push
+      if: steps.scan_pipeline.outcome == 'success'
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: user/app:latest
+
+
+      
     - 
       name: Upload Trivy Report
       id: upload_trivy_report
