@@ -65,15 +65,34 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     -
-      name: Build and push
+      name: Build and Push
+      id: docker_build
       if: steps.scan_pipeline.outcome == 'success'
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
         tags: jmx139/go-fortune_jmx:${{ github.sha }}
+    
+    - 
+      name: Install Cosign
+      if: steps.scan_pipeline.outcome == 'success'
+      uses: sigstore/cosign-installer@v3.1.1
+      with:
+        cosign-release: 'v2.1.1'
+    - 
+      name: Check install!
+      if: steps.scan_pipeline.outcome == 'success'
+      run: cosign version
+    -
+      name: Sign Image
+      if: steps.scan_pipeline.outcome == 'success'
+      run: cosign sign docker.io/jmx139/go-fortune_jmx@${{ steps.docker_build.outputs.digest }}
+      env:
+        COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+        cosign_private_key: ${{ secrets.COSIGN_PRIVATE_KEY }}
 
-    #- 
+      #- 
     #  name: Upload Trivy Report
      # id: upload_trivy_report
       #uses: MeilCli/slack-upload-file@v3
