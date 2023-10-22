@@ -88,7 +88,7 @@ jobs:
     -
       name: Sign Image
       if: steps.scan_pipeline.outcome == 'success'
-      run: cosign sign --yes --key env://COSIGN_PRIVATE_KEY docker.io/jmx139/go-fortune_jmx@${{ steps.docker_build.outputs.digest }}
+      run: cosign sign --key docker.io/jmx139/go-fortune_jmx@${{ steps.docker_build.outputs.digest }}
       env:
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
