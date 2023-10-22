@@ -41,7 +41,7 @@ jobs:
       if: steps.scan_pipeline.outcome == 'failure'
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST_OLD}}
         SLACK_TITLE: 'Pipeline Scan Failed'
         SLACK_MESSAGE: 'FAILED TRIVY SCAN'
 
@@ -87,22 +87,30 @@ jobs:
     -
       name: Sign Image
       if: steps.scan_pipeline.outcome == 'success'
-      run: cosign sign docker.io/jmx139/go-fortune_jmx@${{ steps.docker_build.outputs.digest }}
+      run: cosign sign --no-tlog docker.io/jmx139/go-fortune_jmx@${{ steps.docker_build.outputs.digest }}
       env:
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         cosign_private_key: ${{ secrets.COSIGN_PRIVATE_KEY }}
         digest: ${{ steps.docker_build.outputs.digest }}
-    
+    -
+      name: Report Success Messgae
+      if: steps.scan_pipeline.outcome == 'success'
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST_OLD}}
+        SLACK_TITLE: 'Pipeline Scan SUCCESSED'
+        SLACK_MESSAGE: 'SUCCESS TRIVY SCAN'
 
-      #- 
-    #  name: Upload Trivy Report
-     # id: upload_trivy_report
-      #uses: MeilCli/slack-upload-file@v3
-      #if: always()
-      #with:
-       # slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-        #channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
-        #file_path: 'trivy-report.txt'
-        #initial_comment: 'Report by Jmx'
+
+    - 
+      name: Upload Trivy Report
+      id: upload_trivy_report
+      uses: MeilCli/slack-upload-file@v3
+      if: always()
+      with:
+        slack_token: ${{ secrets.SLACK_BOT_TOKEN_OLD }}
+        channel_id: ${{ secrets.SLACK_CHANNELID_TEST_OLD}}
+        file_path: 'trivy-report.txt'
+        initial_comment: 'Report by Jmx'
       
           
