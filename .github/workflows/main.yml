@@ -73,8 +73,6 @@ jobs:
         push: true
         tags: jmx139/jmx/go-fortune:${{ github.sha }}
 
-
-      
     - 
       name: Upload Trivy Report
       id: upload_trivy_report
