@@ -115,7 +115,7 @@ jobs:
       name: Upload Trivy Report
       id: upload_trivy_report
       uses: MeilCli/slack-upload-file@v3
-      if: always()
+      
       with:
         slack_token: ${{ secrets.SLACK_BOT_TOKEN_OLD }}
         channel_id: ${{ secrets.SLACK_CHANNELID_TEST_OLD}}
