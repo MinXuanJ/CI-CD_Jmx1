@@ -87,7 +87,7 @@ jobs:
     - 
       name: Cosign Key
       if: steps.scan_pipeline.outcome == 'success'
-      run: echo"${{ secrets.COSIGN_PRIVATE_KEY }}"  > cosign.key
+      run: echo "${{ secrets.COSIGN_PRIVATE_KEY }}"  > cosign.key
     -
       name: Sign Image
       if: steps.scan_pipeline.outcome == 'success'
