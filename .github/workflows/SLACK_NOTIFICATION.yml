@@ -30,7 +30,7 @@ jobs:
         ignore-unfixed: true
         format: 'table'
         output: 'trivy-report.txt'
-        severity: 'HIGH'
+        severity: 'CRITICAL,HIGH'
     - 
       name: Display Trivy Report
       if: steps.scan_pipeline.outcome == 'failure'
