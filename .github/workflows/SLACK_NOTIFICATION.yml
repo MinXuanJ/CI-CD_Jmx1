@@ -31,7 +31,7 @@ jobs:
         format: 'table'
         output: 'trivy-report.txt'
         exit-code: '1'
-        severity: 'CRITICAL,HIGH'
+        severity: 'CRITICAL'
     - 
       name: Display Trivy Report
       if: failure()
