@@ -19,8 +19,7 @@ jobs:
       with:
         repository: ${{ github.repository }}
         ref: ${{ github.ref }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
+        token: ${{ secrets.GITHUB_TOKEN }}    
     - 
       name: Scan Pipeline Vunerability
       id: scan_pipeline
@@ -31,22 +30,10 @@ jobs:
         ignore-unfixed: true
         format: 'table'
         output: 'trivy-report.txt'
-        severity: 'CRITICAL,HIGH'
- 
-    -
-      name: Report Failure Messgae
-      id: report_failure
-      if: steps.scan_pipeline.outcome == 'failure'
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_SUBMISSION}}
-        SLACK_TITLE: 'Pipeline Scan Failed'
-        SLACK_MESSAGE: 'FAILED TRIVY SCAN'
-
+        severity: 'CRITICAL'
     - 
       name: Display Trivy Report
       run: cat trivy-report.txt
-
     -
       name: Set up QEMU
       if: steps.scan_pipeline.outcome == 'success'
@@ -71,7 +58,6 @@ jobs:
         context: .
         push: true
         tags: jmx139/go-fortune_jmx:${{ github.sha }}
-    
     - 
       name: Install Cosign
       if: steps.scan_pipeline.outcome == 'success'
@@ -115,13 +101,11 @@ jobs:
           EMAIL: E1221807@u.nus.edu
           GIT: https://github.com/MinXuanJ/CI-CD_Jmx1
           IMAGE: https://hub.docker.com/repository/docker/jmx139/go-fortune_jmx/general
-
-
     - 
       name: Upload Trivy Report
       id: upload_trivy_report
       uses: MeilCli/slack-upload-file@v3
-      
+      if: always()
       with:
         slack_token: ${{ secrets.SLACK_BOT_TOKEN}}
         channel_id: ${{ secrets.SLACK_CHANNELID_SUBMISSION}}
