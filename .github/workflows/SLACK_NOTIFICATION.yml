@@ -23,7 +23,6 @@ jobs:
     - 
       name: Scan Pipeline Vunerability
       id: scan_pipeline
-      if: steps.scan_pipeline.outcome == 'failure'
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
