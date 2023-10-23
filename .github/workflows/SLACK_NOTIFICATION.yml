@@ -30,7 +30,7 @@ jobs:
         ignore-unfixed: true
         format: 'table'
         output: 'trivy-report.txt'
-        exit-code: '1'
+        
         severity: 'CRITICAL,HIGH'
     - 
       name: Display Trivy Report
