@@ -41,7 +41,7 @@ jobs:
       if: steps.scan_pipeline.outcome == 'failure'
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST_OLD}}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST_11}}
         SLACK_TITLE: 'Pipeline Scan Failed'
         SLACK_MESSAGE: 'FAILED TRIVY SCAN'
 
@@ -109,7 +109,7 @@ jobs:
       if: steps.scan_pipeline.outcome == 'success'
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST_OLD}}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST_11}}
         SLACK_TITLE: 'Pipeline Scan SUCCESSED'
         SLACK_MESSAGE: 'SUCCESS TRIVY SCAN'
 
