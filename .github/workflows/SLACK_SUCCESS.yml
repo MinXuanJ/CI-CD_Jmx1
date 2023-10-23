@@ -93,7 +93,7 @@ jobs:
       if: steps.scan_pipeline.outcome == 'success'
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST }}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_SUBMISSION }}
         SLACK_TITLE: 'Pipeline Scan SUCCESSED'
         SLACK_MESSAGE: |
           NAME: JIANG MIN XUAN

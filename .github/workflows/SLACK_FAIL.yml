@@ -37,7 +37,7 @@ jobs:
       
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_SUBMISSION}}
         SLACK_TITLE: 'Pipeline Scan Failed'
         SLACK_MESSAGE: 'FAILED TRIVY SCAN'
     - 
@@ -46,8 +46,8 @@ jobs:
       if: always()
       uses: MeilCli/slack-upload-file@v3 
       with:
-        slack_token: ${{ secrets.SLACK_BOT_TOKEN}}
-        channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
+        slack_token: ${{ secrets.SLACK_BOT_TOKEN_SUBMISSION}}
+        channel_id: ${{ secrets.SLACK_CHANNELID_SUBMISSION}}
         file_path: 'trivy-report.txt'
         initial_comment: 'Report by Jmx'
       
