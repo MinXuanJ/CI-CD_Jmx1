@@ -34,12 +34,12 @@ jobs:
         severity: 'CRITICAL,HIGH'
     - 
       name: Display Trivy Report
-      if: steps.scan_pipeline.outcome == 'failure'
+      if: failure()
       run: cat trivy-report.txt
     -
       name: Report Failure Messgae
       id: report_failure
-      if: steps.scan_pipeline.outcome == 'failure'
+      if: failure()
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
@@ -48,7 +48,7 @@ jobs:
     - 
       name: Upload Trivy Report
       id: upload_trivy_report
-      if: steps.scan_pipeline.outcome == 'failure'
+      if: failure()
       uses: MeilCli/slack-upload-file@v3 
       with:
         slack_token: ${{ secrets.SLACK_BOT_TOKEN_TEST}}
