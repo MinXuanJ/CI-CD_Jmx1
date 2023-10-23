@@ -41,13 +41,9 @@ jobs:
         SLACK_TITLE: 'Pipeline Scan Failed'
         SLACK_MESSAGE: 'FAILED TRIVY SCAN'
     - 
-      name: Display Trivy Report
-      run: cat trivy-report.txt
-    - 
       name: Upload Trivy Report
       id: upload_trivy_report
-      uses: MeilCli/slack-upload-file@v3
-      
+      uses: MeilCli/slack-upload-file@v3 
       with:
         slack_token: ${{ secrets.SLACK_BOT_TOKEN}}
         channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
