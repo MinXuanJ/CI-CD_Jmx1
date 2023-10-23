@@ -34,7 +34,7 @@ jobs:
     -
       name: Report Failure Messgae
       id: report_failure
-      if: steps.scan_pipeline.outcome == 'failure'
+      
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
@@ -43,15 +43,15 @@ jobs:
     - 
       name: Display Trivy Report
       run: cat trivy-report.txt
-    #- 
-     # name: Upload Trivy Report
-      #id: upload_trivy_report
-      #uses: MeilCli/slack-upload-file@v3
-      #if: always()
-      #with:
-       # slack_token: ${{ secrets.SLACK_BOT_TOKEN}}
-        #channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
-        #file_path: 'trivy-report.txt'
-        #initial_comment: 'Report by Jmx'
+    - 
+      name: Upload Trivy Report
+      id: upload_trivy_report
+      uses: MeilCli/slack-upload-file@v3
+      
+      with:
+        slack_token: ${{ secrets.SLACK_BOT_TOKEN}}
+        channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
+        file_path: 'trivy-report.txt'
+        initial_comment: 'Report by Jmx'
       
           
