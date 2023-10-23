@@ -79,7 +79,7 @@ jobs:
       if: steps.scan_pipeline.outcome == 'success'
       uses: sigstore/cosign-installer@v3.1.1
       with:
-        cosign-release: 'v2.1.1'
+        cosign-release: 'v2.2.0'
     - 
       name: Check install
       if: steps.scan_pipeline.outcome == 'success'
