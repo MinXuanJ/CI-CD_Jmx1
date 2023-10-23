@@ -31,7 +31,7 @@ jobs:
         format: 'table'
         output: 'trivy-report.txt'
         exit-code: '1'
-        severity: 'CRITICAL'
+        severity: 'CRITICAL,HIGH'
     - 
       name: Display Trivy Report
       if: failure()
@@ -45,6 +45,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST}}
         SLACK_TITLE: 'Pipeline Scan Failed'
         SLACK_MESSAGE: 'FAILED TRIVY SCAN'
+        SLACK_COLOR: ${{ job.status }}
     - 
       name: Upload Trivy Report
       id: upload_trivy_report
@@ -114,6 +115,7 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST }}
+        SLACK_COLOR: ${{ job.status }}
         SLACK_TITLE: 'Pipeline Scan SUCCESSED'
         SLACK_MESSAGE: |
           NAME: JIANG MIN XUAN
