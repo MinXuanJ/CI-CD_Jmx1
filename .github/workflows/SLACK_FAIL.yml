@@ -30,7 +30,7 @@ jobs:
         ignore-unfixed: true
         format: 'table'
         output: 'trivy-report.txt'
-        severity: 'CRITICAL,HIGH'
+        severity: 'HIGH'
     -
       name: Report Failure Messgae
       id: report_failure
@@ -43,6 +43,7 @@ jobs:
     - 
       name: Upload Trivy Report
       id: upload_trivy_report
+      if: always()
       uses: MeilCli/slack-upload-file@v3 
       with:
         slack_token: ${{ secrets.SLACK_BOT_TOKEN}}
