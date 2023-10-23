@@ -4,7 +4,6 @@ on:
   push:
     branches: 
       - 'v[0-9]+.[0-9]+'
-      - master
     
 jobs:
   SLACK_NOTIFICATION: 
@@ -121,7 +120,7 @@ jobs:
           NAME: JIANG MIN XUAN
           MATRICULATION: A0285995B
           EMAIL: E1221807@u.nus.edu
-          GIT: https://github.com/MinXuanJ/CI-CD_Jmx1/tree/v0.1
+          GIT: https://github.com/${{github.repository}}/tree/v0.1
           IMAGE: https://hub.docker.com/repository/docker/jmx139/go-fortune_jmx/general
   
       
