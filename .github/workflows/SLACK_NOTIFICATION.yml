@@ -31,7 +31,7 @@ jobs:
         format: 'table'
         output: 'trivy-report.txt'
         exit-code: '1'
-        severity: 'CRITICAL'
+        severity: 'CRITICAL,HIGH'
     - 
       name: Display Trivy Report
       if: failure()
@@ -51,8 +51,8 @@ jobs:
       if: failure()
       uses: MeilCli/slack-upload-file@v3 
       with:
-        slack_token: ${{ secrets.SLACK_BOT_TOKEN_TEST}}
-        channel_id: ${{ secrets.SLACK_CHANNELID_TEST}}
+        slack_token: ${{ secrets.SLACK_BOT_TOKEN_OLD}}
+        channel_id: ${{ secrets.SLACK_CHANNELID_OLD}}
         file_path: 'trivy-report.txt'
         initial_comment: 'Report by Jmx'
     -
